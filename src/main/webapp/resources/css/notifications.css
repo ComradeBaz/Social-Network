@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-Jan-2020, 11:54:09
+    Author     : David
+*/
+
+.newNotification {
+    position: absolute;
+    left: 68px;
+    top: 18px;
+    display: none;
+}
+
+.newNotificationWhenThreeMenuButtons {
+    position: absolute;
+    left: 108px;
+    top: 184px;
+    display: none;
+}
+
+.newNotificationWithNoAddButton {
+    position: absolute;
+    left: 85px;
+    top: 18px;
+    display: none;
+}
+
+.imageToBeOverlayed {
+    position: relative;
+    top: 0;
+    left: 0;
+}

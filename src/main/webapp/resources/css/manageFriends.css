@@ -1,0 +1,112 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-Nov-2019, 12:13:30
+    Author     : David
+*/
+.list-of-friends {
+    display: block; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    min-width: 230px; 
+    max-width: 340px; 
+    margin-left: auto; 
+    margin-right: auto
+}
+
+.firstColumn {
+    width: 20%;
+}
+
+.secondColumn {
+    width: 50%;
+    padding: 0px;
+}
+
+.thirdColumn {
+    width: 15%;
+    padding: 0px;
+}
+.firstColumnOne {
+    width: 20%;
+}
+
+.secondColumnTwo {
+    width: 60%;
+    padding: 0px;
+}
+
+.thirdColumnThree {
+    width: 20%;
+    padding: 0px;
+}
+
+.friendModalPosition {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+/*
+.alertModalPosition {
+    position: fixed;
+    bottom: 8%;
+    left: 5%;
+}
+
+.alertPopUp {
+    font-size: 12px;
+    width: fit-content;
+    margin: 0px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 2px 4px;
+    border-radius: 5px;
+    background-color: white;
+    -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
+    -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+}
+*/
+
+.commandLinks {
+
+    color: #0000EE; 
+    padding: 0px 12px;
+    font-size: 12px;
+    color: blue;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    padding: 0px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f2f2f2;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+}
+
+

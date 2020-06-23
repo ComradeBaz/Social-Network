@@ -1,0 +1,14 @@
+.idea
+target
+/.settings/
+/CleanUp/
+/deployment/
+/src/main/resources/META-INF/persistence.xml
+/src/main/resources/FindMe.txt
+/src/main/resources/application.properties
+/src/main/resources/import_data.sql
+/src/main/resources/static/B/
+/src/main/resources/static/D/
+/src/main/resources/static/F/
+/src/main/resources/static/J/
+/src/main/resources/static/Z/

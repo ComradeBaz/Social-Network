@@ -1,0 +1,89 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25-Mar-2019, 18:42:43
+    Author     : ComradeBaz
+*/
+
+.list-of-events {
+    display: block; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    min-width: 230px; 
+    max-width: 340px; 
+    margin-left: auto; 
+    margin-right: auto
+}
+
+table {
+    width: 100%;
+    font-family: inherit;
+}
+td {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+td.columnA {
+    width: 33%;
+}
+td.columnB {
+    width: 33%;
+    text-align: center;
+}
+td.columnC a {
+    width: 33%;
+    color: #105d94;
+}
+
+.myH1 {
+    font-size: 32px;
+    margin: 20px 5px 5px 5px;
+}
+
+.myH2 {
+    font-size: 26px;
+    margin: 2px 5px 5px 5px;
+}
+
+.myH3 {
+    font-size: 16px;
+    color: #333333;
+    margin: 2px 5px 5px 5px;
+}
+
+p {
+    white-space: pre;
+    font-size: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f2f2f2;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+}

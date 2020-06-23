@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09-Apr-2019, 18:27:35
+    Author     : ComradeBaz
+*/
+
+/* 
+// This is the profile picture 
+*/
+tr.ui-widget-content > td:first-child {
+    vertical-align: top;
+    width: 20%;
+    padding: 2px;
+}
+
+/*
+// Profile picture
+*/
+.profilePicPost {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: static;
+    vertical-align: top;
+}
+/*
+// Remove grid lines from friend list
+*/
+.ui-panelgrid .ui-panelgrid-cell {
+    border-style: none;
+    text-align: left;
+    padding-top: auto;
+    padding-bottom: auto;
+    padding-left: 10px;
+}
+/*
+// Remove grid lines from friend list
+*/
+.ui-widget-content {
+    border-style: none;
+}

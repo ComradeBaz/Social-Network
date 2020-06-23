@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27-Feb-2020, 11:35:47
+    Author     : David
+*/
+
+.ui-inputfield {
+    background-color: white;
+}
+
+.ui-inputtext {
+    
+}
+
+.ui-widget {
+    
+}
+
+.ui-state-default {
+    
+}
+
+.ui-corner-all {
+    
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}

@@ -1,0 +1,263 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 17-Apr-2019, 12:00:25
+    Author     : ComradeBaz
+*/
+
+body {overflow:hidden;}
+
+.displyMessageTextArea {
+    color: black;
+}
+
+.list-of-messages {
+    display: block; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    min-width: 230px; 
+    max-width: 340px; 
+    margin-left: auto; 
+    margin-right: auto
+}
+
+.displayMessageTextArea:hover {
+
+}
+
+.textOverflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.messagesProfilePicture {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: static;
+    vertical-align: top;
+    border-style: solid;
+    border-color: #ddd;
+    max-height: 100%;
+    overflow: scroll;
+}
+
+.ten-percent {
+    width: 10%;
+    padding: 0px;
+}
+
+.twenty-percent {
+    width: 20%;
+    padding: 0px;
+    vertical-align: middle;
+}
+
+.twenty-percent-messages {
+    width:  22%;
+    padding: 0px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.eighty-percent-messages {
+    width:  78%;
+    padding: 0px;
+    vertical-align: middle;
+    align-content: center;
+}
+/* 
+    Remove the border from the table header
+*/
+.ui-datatable thead th {
+    border-style: none;
+    background-color: #f2f2f2;
+    border-radius: 0px;
+}
+/* 
+    Remove the scrollbar that was added when border was removed
+*/
+.ui-datatable-tablewrapper {
+    overflow: hidden;
+}
+
+.eighty-percent {
+    width: 80%;
+    padding: 0px;
+    border-width: 1px 3px 1px 1px;
+}
+
+.ninety-percent {
+    width: 90%;
+}
+
+eighty-percent-newMessage {
+    width: 80%;
+}
+
+ten-percent-newMessage {
+    width: 10%;
+    align-content: center;
+    vertical-align: central;
+}
+.top-alignment {
+    vertical-align: top;
+}
+
+.center-alignment {
+    vertical-align: middle;
+    align-content: center;
+}
+
+.bottom-alignment {
+    vertical-align: bottom;
+}
+
+.recipient {
+    padding: 2px;
+    font-family: inherit;
+    border-radius: 4px;
+    margin: 6px;
+}
+
+.messageDetailInputTextArea {
+    width: min-content;
+}
+
+.messageDetailDiv {
+    background-color: #f2f2f2;
+}
+
+.preformatted {
+    white-space: pre-wrap;
+}
+
+p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.messageOutput {
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: normal;
+    border-radius: 10px;
+    padding: 5px;
+    width: 90%;
+}
+
+.speech-bubble {
+    position: relative;
+    background-color: #cce3ff !important;
+    border-radius: .6em;
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: normal;
+    width: 80%;
+    padding: 10px;
+    margin-left: 15px;
+    margin-right: 10px;
+    max-width: fit-content;
+}
+
+.speech-bubble:first-line {
+    color: purple;
+}
+
+.speech-bubble:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-right: 8px solid #cce3ff;
+    border-left: 8px solid transparent;
+    border-bottom: 8px solid #cce3ff;
+    border-top: 8px solid transparent;
+    left: -12px;
+    bottom: 8px;
+}
+
+.ui-datascroller-content {
+    background-color: red;
+}
+
+.ui-datascroller-list {
+    max-height: 100%;
+}
+
+/*
+// Scrollbar
+*/
+.scrollbar {
+    margin-left: 22px;
+    float: left;
+    height: 300px;
+    width: 65px;
+    background: #F5F5F5;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+.force-overflow {
+    min-height: 450px;
+}
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f2f2f2;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+}
+
+/*
+// Enable animations for fireFox
+*/
+@-moz-keyframes pulse { /* older versions of FF */
+    from {
+        -moz-transform: scale(1.0);
+        opacity: 0.75;
+    }
+    50% {
+        -moz-transform: scale(1.2);
+        opacity: 1.0;
+    }
+    to { 
+        -moz-transform: scale(1.0);
+        opacity: 0.75;
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1.0);
+        opacity: 0.75;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1.0;
+    }
+    to { 
+        transform: scale(1.0);
+        opacity: 0.75;
+    }
+}

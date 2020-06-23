@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25-Mar-2019, 16:22:15
+    Author     : ComradeBaz
+*/
+.inputTextBoxStyleNewEvent {
+    margin: 2px 2px 2px 2px;
+    padding: 2px;
+    font-family: inherit;
+    width: 90%;
+}
+/*
+// Watermark for newEvent textBoxes
+color: #999;
+color: #999;
+*/
+input.watermark {
+    
+}
+
+textarea.watermark {
+    
+}
+
+.ui-inputfield {
+    font-family: inherit;
+    width: 90%;
+}

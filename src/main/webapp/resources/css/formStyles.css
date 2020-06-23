@@ -1,0 +1,176 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18-Mar-2019, 14:26:04
+    Author     : ComradeBaz adapted from https://codepen.io/Tushkiz/pen/xqfsy
+*/
+
+.login {
+    margin: 20px auto;
+    width: 300px;
+}
+.login-screen {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 4px
+}
+
+sign-up-form {
+    background-color: #FFF;
+    padding: 5px;
+}
+
+.app-title {
+    text-align: center;
+    color: #777;
+}
+
+.login-form {
+    text-align: center;
+}
+.signup-form {
+    text-align: left;
+}
+table {
+    
+}
+.control-group {
+    margin-bottom: 10px;
+}
+.loginButton {
+    text-align: center;
+    background-color: #6c8b93;
+    color: white;
+    width: inherit;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 70%;
+    transition: border .5s;
+    box-sizing: border-box;
+}
+
+.loginButton:hover {
+    background-color: #4c6167;
+}
+.finishButton {
+    font-family: 'Open Sans', Arial, sans-serif;
+    text-align: center;
+    background-color: #6c8b93;
+    color: white;
+    width: inherit;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 100%;
+    transition: border .5s;
+    box-sizing: border-box;
+}
+
+.finishButton:hover {
+    background-color: #4c6167;
+}
+.inputTextBoxStyleSignUp {
+    text-align: center;
+    background-color: white !important;
+    color: black;
+    width: inherit;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 70%;
+    transition: border .5s;
+    box-sizing: border-box;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+input:-internal-autofill-selected {
+    background-color: white !important;
+    color: #999;
+}
+.inputTextBoxStyle {
+    text-align: center;
+    background-color: #ECF0F1;
+    width: inherit;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 70%;
+    transition: border .5s;
+    box-sizing: border-box;
+}
+.roleChoiceRadioButtons {
+    font-family: inherit;
+    color: inherit;
+    background-color: inherit;
+}
+.myRadioInline {
+    font-family: Open Sans, Arial, sans-serif;
+    font-weight: normal;
+    color: black;
+    position: relative;
+    display: inline-block;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}
+label.myRadioInline {
+    padding-left: 5px;
+}
+.radioButtons {
+    width: fit-content;
+    text-align: left;
+    margin-left: 0px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+td {
+    padding: 5px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    font-family: inherit;
+    font-size: 20px;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+input.watermark {
+    color: #999;
+}
+
+.terms {
+    display:block;
+    text-align:center
+}

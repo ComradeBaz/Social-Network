@@ -1,0 +1,264 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13-Mar-2019, 12:16:42
+    Author     : ComradeBaz
+*/
+
+body {overflow:hidden;}
+
+.wallBaseStyles {
+    font-family: 'Open Sans', Arial, sans-serif;
+    overflow: auto;
+    text-align: center;
+    padding-right: 20px;
+    margin: 0px 10px 10px 10px;
+    width: 100%;
+}
+
+.timeline {
+    display: block; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    min-width: 230px; 
+    max-width: 340px; 
+    margin-left: auto; 
+    margin-right: auto
+}
+
+.myModal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+/* 
+// Temp to see the outline of elements
+*/
+.ui-datascroller-content {
+    border-color: transparent;
+}
+/* 
+// Temp to see the outline of elements
+*/
+.ui-widget-content {
+    border-color: transparent;
+    color: black;
+}
+/* 
+// Parent element of the list of posts (dataScroller)
+*/
+.ui-datascroller .ui-datascroller-list {
+    margin: 4px 2px;
+}
+/* 
+// Table element - individual posts are saved to a table
+// A row holds the profile pic in one td and the postText in another td
+// --> profile pic td and postText td is a complete row
+*/
+.wallPostTable {
+    table-layout: auto;
+    width: 100%;
+    border-style: solid;
+    border-width: 2px;
+    border-bottom-width: 1px;
+    border-color: #f2f2f2;   
+    border-bottom-color: #777;
+    background-color: #ddd;
+    color: #ddd;
+    margin-top: 15px;
+}
+
+.wallPostTable td {
+    background-color: white;
+}
+
+.timestampText {
+    text-align: left;
+    padding: 0px 0px 0px 5px;
+    color: #777;
+    font-size: 14px;
+}
+
+.postReplyTimestampText {
+    text-align: left;
+    padding: 0px 0px 0px 1px;
+    color: #777;
+    font-size: 10px;
+}
+
+.nameAndTimeStamp {
+    border-bottom: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #f2f2f2;
+}
+
+/* Style timestamp paragraph */
+p.nameAndTimeStamp {
+    margin-bottom: 4px;
+}
+
+.replyLikeButtonDiv {
+    border-top: solid;
+    border-top-width: 2px;
+    border-top-color: #f2f2f2;
+}
+
+.replyPostTable {
+    table-layout: auto;
+    width: 100%;
+    border-style: none;
+}
+
+.replyPostTable td {
+    background-color: white;
+}
+/* 
+// This styles td elements from the .wallPostTable
+*/
+.ui-widget {
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+.ui-widget .ui-widget {
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+/* 
+// This is the profile picture td
+*/
+tr.ui-widget-content > td:first-child {
+    vertical-align: top;
+    width: 20%;
+    padding: 4px 4px 0 4px;
+}
+/*
+// This is the main body of the wall post
+*/
+tr.ui-widget-content > td:nth-child(2) {
+    vertical-align: top;
+    width: 80%;
+    padding: 4px 4px 0 4px;
+}
+/* 
+// This is the profile picture
+*/
+
+wallPostTable > tr {
+    
+}
+
+
+.profilePicPost {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    position: static;
+    vertical-align: top;
+    border-style: solid;
+    border-color: #ddd;
+}
+
+.profilePicMessageReceiver {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    position: static;
+    vertical-align: top;
+    border-style: solid;
+    border-color: #ddd;
+}
+
+.profilePicReply {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: static;
+    vertical-align: top;
+    border-style: solid;
+    border-color: #ddd;
+}
+/* 
+// This is second name td
+*/
+tr.ui-widget-content > td:nth-child(2) {
+    padding: 4px 4px 0 0;
+    text-align: left;
+    width: fit-content;
+}
+
+tr.ui-widget-content > td:nth-child(3) {
+    padding: 4px 4px 0 0;
+    text-align: left;
+    width: fit-content;
+}
+/* 
+// This is span holding the postText
+*/
+.postText {
+    text-align: left;
+    padding: 0 0 2px 4px;
+}
+
+.replyText {
+    text-align: left;
+    padding: 0 0 2px 0px;
+}
+
+.newPostTextAreaWrapper > table {
+    box-sizing: border-box;
+    width: available;
+}
+
+.newPostTextArea {
+    margin-top: 10px;
+    margin-left: 4px;
+    width: 100%;
+}
+
+.newPostTextAreaWrapper {
+    box-sizing: border-box;
+}
+
+.bodyColour {
+    /*background-color: #DEE5EC;*/
+    width: 100%;
+    height: 100%;
+    align-content: center;
+}
+
+/*
+// Border beneath wall post replies separating them from next post
+*/
+div.ui-datascroller-content.ui-widget-content.ui-corner-all {
+    border-bottom: solid;
+    border-bottom-style: solid;
+    border-bottom-color: #777;
+    border-bottom-width: 1px;
+}
+
+.ui-datascroller-content.ui-widget-content.ui-corner-all {
+    background-color: #f2f2f2;
+}
+
+.ui-datascroller-loading {
+    
+}
+
+.postModalPosition {
+    position: fixed;
+    top: 200px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*
+#f2f2f2
+*/

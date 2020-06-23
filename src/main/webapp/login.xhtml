@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/include/template.xhtml">
+        <ui:define name="head">
+            <title>Domrade</title>
+            <h:outputScript library="js" name="clearTextBoxes.js"/>
+            <h:outputStylesheet name="css/starter-template.css"/>
+            <h:outputStylesheet name="css/formStyles.css"/>
+        </ui:define>
+        <ui:define name="body">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" 
+                                data-toggle="collapse" 
+                                data-target="#navbar" 
+                                aria-expanded="false" 
+                                aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+
+                    </div>
+                    <div class="col-lg-4">
+                        <h:form prependId="false">
+                            <div class="login">
+                                <div class="login-screen">
+                                    <div class="app-title">
+                                        <h1>Login</h1>
+                                    </div>
+                                </div>
+                                <div class="login-form">
+                                    <div class="control-group">
+                                        <p:inputText id="emailAddress"
+                                                     value="#{logInController.email}"
+                                                     class="inputTextBoxStyle">
+                                        </p:inputText>
+                                        <p:watermark for="emailAddress"
+                                                     value="Email Address"/>
+                                    </div>
+                                    <div class="control-group">
+                                        <p:password id="password"
+                                                    value="#{logInController.password}"
+                                                    redisplay="false"
+                                                    class="inputTextBoxStyle">
+                                        </p:password> 
+                                        <p:watermark for="password"
+                                                     value="Password"/>
+                                    </div>
+                                    <div class="control-group">
+                                        <h:commandButton value="Log In"
+                                                         class="loginButton"
+                                                         action="#{logInController.login()}"/>
+                                    </div>
+                                    <div class="control-group">
+                                        <h:commandLink value="No account? Sign Up"
+                                                       action="/signup.xhtml?faces-redirect=true">
+                                            <f:ajax execute="@this"/>
+                                        </h:commandLink>
+
+                                        <div class="control-group">
+                                            <h:commandLink value="Terms"
+                                                           action="/terms.xhtml?faces-redirect=true">
+                                                <f:ajax execute="@this"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form> 
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>
+            </div><!-- /.container -->
+        </ui:define>
+    </ui:composition> 
+</html>

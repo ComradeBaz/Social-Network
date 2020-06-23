@@ -1,0 +1,136 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-Mar-2019, 13:40:43
+    Author     : ComradeBaz
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600);
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+
+/* 
+overflow: auto; 
+If overflow is clipped, a scroll-bar should be added to see the rest of the content
+*/
+.profileDiv {
+    font-family: 'Open Sans', Arial, sans-serif;
+    position: relative;
+    overflow: hidden; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    min-width: 230px;
+    max-width: 340px;
+    width: 100%;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.4em;
+    text-align: center;
+    border-bottom: #777;
+    border-top: #777;
+    border-style: double;
+    background-color: #f2f2f2;
+}
+
+.profileText {
+    color: black;
+}
+
+.profilePic {
+    border-radius: 50%;
+    max-width: 100px;
+    width: 100px;
+    max-height: 100px;
+    height: 100px;
+    margin: auto;
+    position: relative;
+
+}
+
+.profilePicWrapper {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    align-content: center;
+
+}
+
+.profilePicDiv {
+    text-align: center;
+    padding: 10px;
+
+}
+
+.editTextBoxes {
+    text-align: center;
+    font-family: inherit;
+}
+
+.inputTextBoxStyle {
+    text-align: center;
+    background-color: #ECF0F1;
+    width: inherit;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    margin: 3px 0 3px 0;
+    width: 70%;
+    transition: border .5s;
+    box-sizing: border-box;
+}
+
+.inputTextBoxStyle.displayName {
+    padding: 2px 4px;
+}
+
+.loginButton {
+    text-align: center;
+    background-color: #6c8b93;
+    color: white;
+    width: inherit;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 70%;
+    transition: border .5s;
+    box-sizing: border-box;
+}
+
+.loginButton:hover {
+    background-color: #4c6167;
+}
+
+.profileIcons {
+    margin: 5px;
+}
+
+/*
+// Hide the file input for picture uploads 
+// and replace it with a styled label
+*/
+
+
+.labelAsButton {
+    font-family: inherit;
+    font-weight: 500;
+    background-color: #E5DEEC;
+    color: black;
+    padding: 1px 6px;
+    border: 1px;
+    border-color: #777;
+    border-style: solid;
+    margin: 0 2px 0 2px;
+    border-radius: 4px;
+    width: 120px;
+}
+
+.labelAsButton:hover {
+    background-color: #d9cee3;
+}

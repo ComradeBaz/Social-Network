@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-Mar-2019, 16:20:36
+    Author     : ComradeBaz
+*/
+
+.myH1 {
+    font-size: 32px;
+    margin: 20px 5px 5px 5px;
+}
+
+.myH2 {
+    font-size: 26px;
+    margin: 2px 5px 5px 5px;
+}
+
+.myH3 {
+    font-size: 16px;
+    color: #333333;
+    margin: 2px 5px 5px 5px;
+}
+
+p {
+    white-space: pre;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+#footerTable {
+    width: 100%;
+    font-size: 14px;
+}
+#footerTable tbody td:first-child {
+    text-align: left;
+    font-size: 14px;
+}
+#footerTable tbody td:last-child {
+    text-align: right;
+    font-size: 14px;
+}

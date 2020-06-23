@@ -1,0 +1,472 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="/WEB-INF/include/template_no_jQuery.xhtml">
+            <ui:define name="head">
+                <title>Domrade</title>
+                <!-- Custom styles for this template -->
+                <h:outputStylesheet name="css/starter-template.css"/>
+                <h:outputStylesheet name="css/profileStyles.css"/>
+                <h:outputStylesheet name="css/manageUserMenu.css"/>    
+                <h:outputStylesheet name="css/friendListStyles.css"/>  
+                <h:outputStylesheet name="css/manageNetworkUsers.css"/>
+                <h:outputStylesheet name="css/manageFriends.css"/>
+                <h:outputStylesheet name="css/manageSse.css"/>   
+                <h:outputStylesheet name="css/notifications.css"/>   
+                <h:outputScript library="js" name="manageUserMenu.js"/>
+                <h:outputScript library="js" name="manageFriendRequest.js"/>
+                <h:outputScript library="js" name="serverSentEventHandler.js"/>
+            </ui:define>
+            <ui:define name="body">
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" 
+                                    data-toggle="collapse" 
+                                    data-target="#navbar" 
+                                    aria-expanded="false" 
+                                    aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <h:form id="myForm"
+                                prependId="false">
+                            <div id="navbar" class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <h:commandLink action="#{logInController.logout()}"
+                                                       value="Logout"/>
+                                    </li>
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </h:form>
+                    </div>
+                </nav>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <h:form enctype="multipart/form-data"
+                                    prependId="false">
+                                <h:messages id="messages"/>
+                                <div style="align-content: center">
+                                    <div class="profileDiv">
+                                        <div class="profilePicDiv">
+                                            <div id="theProfilePicture"
+                                                 class="profilePicDiv">
+                                                <p:graphicImage value="#{friendController.sessionMB.loggedInUser.profilePicture}"
+                                                                class="profilePic"
+                                                                id="profiler"/>
+                                            </div>
+                                            <h3>
+                                                <span class="profileText displayName">
+                                                    #{friendController.sessionMB.loggedInUser.firstName} #{friendController.sessionMB.loggedInUser.lastName}
+                                                </span>
+                                            </h3>
+                                            <h4>
+                                                <span class="profileText displayName">
+                                                    Friends
+                                                </span>
+                                            </h4>
+
+                                            <div class="icons"
+                                                 style="margin-bottom: 6px; position: relative; left: 0; top: 0;"> 
+                                                <div class="dropdown">
+                                                    <h:commandButton image="#{resource['images:goToNetworkWall.png']}"
+                                                                     class="profileIcons"
+                                                                     onclick="hideNotificationIcon()"
+                                                                     id="menuButton">
+                                                        <f:ajax execute="@this"/>
+                                                    </h:commandButton>   
+                                                    <h:graphicImage id="newNotificationIcon"
+                                                                    value="#{resource['images:newNotification.png']}"
+                                                                    class="newNotificationWithNoAddButton">
+                                                    </h:graphicImage>
+                                                </div>
+                                            </div>
+                                            <div id="menuList" 
+                                                 class="dropdown-content"
+                                                 style="display: none">
+                                                <h:panelGroup id="wallPanelRoleUser"
+                                                              rendered="#{p:ifGranted('ROLE_USER')}">                                                
+                                                    <p:outputPanel id="postPanelRoleUser"
+                                                                   style="border-top: #ddd; border-top-style: ridge" >
+                                                        <p><h:commandLink value="Join a Network"
+                                                                          action="#{navigationController.goToRequestJoinNetwork()}"/></p>
+                                                        <p><h:commandLink value="Messages"
+                                                                          class="messagesNotNotified"
+                                                                          action="#{navigationController.goToMessages}"/></p>
+                                                        <p><h:commandLink value="Profile"
+                                                                          action="#{navigationController.goToProfileSettings}"/></p>
+                                                    </p:outputPanel>                                                                                                  
+                                                </h:panelGroup>
+                                                <h:panelGroup id="wallPanelRoleAdmin"
+                                                              rendered="#{p:ifGranted('ROLE_ADMIN')}">                                                
+                                                    <p:outputPanel id="postPanelRoleAdmin"
+                                                                   style="border-top: #ddd; border-top-style: ridge" >
+                                                        <p><h:commandLink value="Set Up Network"
+                                                                          action="#{navigationController.goToSetUpNetwork()}"/></p>
+                                                        <p><h:commandLink value="Messages"
+                                                                          class="messagesNotNotified"
+                                                                          action="#{navigationController.goToMessages}"/></p>
+                                                        <p><h:commandLink value="Profile"
+                                                                          action="#{navigationController.goToProfileSettings}"/></p>
+                                                    </p:outputPanel>                                                                                                  
+                                                </h:panelGroup>
+                                                <h:panelGroup id="wallPanelRoleMember"
+                                                              rendered="#{p:ifGranted('ROLE_MEMBER')}">                                                
+                                                    <p:outputPanel id="postPanelRoleMember"
+                                                                   style="border-top: #ddd; border-top-style: ridge" >
+                                                        <p><h:commandLink value="Home"
+                                                                          class="wallNotNotified"
+                                                                          action="#{navigationController.goToNetwork}"/></p>
+                                                        <p><h:commandLink value="Messages"
+                                                                          class="messagesNotNotified"
+                                                                          action="#{navigationController.goToMessages}"/></p>
+                                                        <p><h:commandLink value="Events"
+                                                                          class="eventsNotNotified"
+                                                                          action="#{navigationController.goToEvents}"/></p>
+                                                        <p><h:commandLink value="Profile"
+                                                                          action="#{navigationController.goToProfileSettings}"/></p>
+                                                    </p:outputPanel>                                                                                                  
+                                                </h:panelGroup>
+                                                <h:panelGroup id="wallPanelRoleAdminMember"
+                                                              rendered="#{p:ifGranted('ROLE_ADMIN_MEMBER')}">                                                
+                                                    <p:outputPanel id="postPanelRoleAdminMember"
+                                                                   style="border-top: #ddd; border-top-style: ridge" >
+                                                        <p><h:commandLink value="Home"
+                                                                          class="wallNotNotified"
+                                                                          action="#{navigationController.goToNetwork}"/></p>
+                                                        <p><h:commandLink value="Messages"
+                                                                          class="messagesNotNotified"
+                                                                          action="#{navigationController.goToMessages}"/></p>
+                                                        <p><h:commandLink value="Events"
+                                                                          class="eventsNotNotified"
+                                                                          action="#{navigationController.goToEvents}"/></p>
+                                                        <p><h:commandLink value="Profile"
+                                                                          action="#{navigationController.goToProfileSettings}"/></p>
+                                                        <p><h:commandLink value="Manage Guests"
+                                                                          class="manageGuestsNotNotified"
+                                                                          action="#{navigationController.manageNetworkUsers()}"/></p>
+                                                    </p:outputPanel>                                                                                                  
+                                                </h:panelGroup>
+                                                <h:panelGroup id="wallPanelRoleUserJoinRequestSent"
+                                                              rendered="#{p:ifGranted('ROLE_USER_JOIN_REQUEST_SENT')}">                                                
+                                                    <p:outputPanel id="postPanelRoleUserJoinRequestSent"
+                                                                   style="border-top: #ddd; border-top-style: ridge" >
+                                                        <p><h:commandLink value="Home"
+                                                                          action="#{navigationController.goToWaitingConfirmation()}"/></p>
+                                                        <p><h:commandLink value="Messages"
+                                                                          class="messagesNotNotified"
+                                                                          action="#{navigationController.goToMessages}"/></p>
+                                                        <p><h:commandLink value="Profile"
+                                                                          action="#{navigationController.goToProfileSettings}"/></p>
+                                                    </p:outputPanel>                                                                                                  
+                                                </h:panelGroup>
+                                            </div>
+                                            <div class="tab">                                                
+                                                <h:commandButton class="tab-button"
+                                                                 id="membersButton"                                                                 
+                                                                 value="Friends">
+                                                    <f:ajax execute="@this" render="existingFriends"/>
+                                                </h:commandButton>
+                                                <h:commandButton class="tab-button"                                                                
+                                                                 id="newRequestsButton"
+                                                                 value="Requests">      
+                                                    <f:ajax execute="@this"/>
+                                                </h:commandButton>
+                                                <h:commandButton class="tab-button"
+                                                                 id="newRequestsButtonSent"                                                                 
+                                                                 value="Sent">      
+                                                    <f:ajax execute="@this"/>
+                                                </h:commandButton>
+                                            </div>
+                                            <div id="divHidePendingFriendRequests"
+                                                 class="newRequestsTabContent">
+                                                <p:outputPanel id="pendingFriendRequests">
+                                                    <div id="divPendingFriendRequests"
+                                                         class="newRequestsTabContent list-of-friends">
+                                                        <p:dataScroller value="#{friendController.userSessionObject.pendingUserFriendRequests}"
+                                                                        var="pendingFriend"
+                                                                        chunkSize="10">
+                                                            <p:panelGrid columns="4" 
+                                                                         columnClasses="firstColumn, secondColumn, thirdColumn, thirdColumn"
+                                                                         style="padding: 5px; width: 100%;"
+                                                                         id="pendingFriends">
+                                                                <p:column style="width: 20%">
+                                                                    <p:graphicImage value="#{pendingFriend.profilePicture}"
+                                                                                    id="friendProfile"
+                                                                                    class="profilePicPost"/>
+                                                                </p:column>
+                                                                <p:column style="width: 50%">
+                                                                    <h:commandLink value="#{pendingFriend.firstName} #{pendingFriend.lastName}" 
+                                                                                   style="font-weight: bold; text-align: left"
+                                                                                   actionListener="#{friendController.sessionMB.setTheUserForBean}"
+                                                                                   action="#{navigationController.goToProfile}"
+                                                                                   id="friendName">
+                                                                        <f:param name="userId" value="#{pendingFriend.id}"/>
+                                                                        <f:param name="fromSource" value="MANAGE_FRIENDS"/>
+                                                                    </h:commandLink>
+                                                                </p:column>
+                                                                <p:column style="width: 15%">
+                                                                    <h:commandLink class="commandLinks"
+                                                                                   style="color: #0000EE;"
+                                                                                   value="Accept"
+                                                                                   id="openConfirmFriendRequest"
+                                                                                   onclick="acceptFriendRequestClicked()"
+                                                                                   actionListener="#{friendController.sessionMB.setTheUserForBean}">                                                                
+                                                                        <f:param name="userId" value="#{pendingFriend.id}"/>
+                                                                        <f:param name="fromSource" value="MANAGE_FRIENDS"/>
+                                                                        <f:ajax execute="@this" render="confirmFriendPanel"/>
+                                                                    </h:commandLink>
+                                                                </p:column>
+                                                                <p:column style="width: 15%">
+                                                                    <h:commandLink value="Delete" 
+                                                                                   id="openConfirmDeleteFriendRequest"
+                                                                                   class="commandLinks"
+                                                                                   style="color: #0000EE;"
+                                                                                   onclick="deleteReceivedRequestClicked()"
+                                                                                   actionListener="#{friendController.sessionMB.setTheUserForBean}">
+                                                                        <f:param name="userId" value="#{pendingFriend.id}"/>
+                                                                        <f:param name="fromSource" value="MANAGE_FRIENDS"/>
+                                                                        <f:ajax execute="@this" render="deleteRequestPanel"/>
+                                                                    </h:commandLink>
+                                                                </p:column>
+                                                            </p:panelGrid>
+                                                        </p:dataScroller>
+                                                    </div>
+                                                </p:outputPanel>
+                                            </div>
+                                            <div id="hideMe"
+                                                 class="newRequestsTabContent">
+                                                <p:outputPanel id="existingFriends">
+                                                    <div id="divFriends"
+                                                         class="newRequestsTabContent list-of-friends">
+                                                        <p:dataScroller value="#{friendController.userSessionObject.userFriendsAsUsers}"
+                                                                        var="friend"
+                                                                        chunkSize="10">
+                                                            <p:panelGrid columns="3" 
+                                                                         columnClasses="firstColumn secondColumn"
+                                                                         style="padding: 5px; width: 100%;"
+                                                                         id="friends">
+                                                                <p:column style="width: 20%">
+                                                                    <p:graphicImage value="#{friend.profilePicture}"
+                                                                                    id="friendProfile"
+                                                                                    class="profilePicPost"/>
+                                                                </p:column>
+                                                                <p:column style="width: 60%">
+                                                                    <h:commandLink value="#{friend.firstName} #{friend.lastName}" 
+                                                                                   style="font-weight: bold; text-align: left"
+                                                                                   actionListener="#{friendController.sessionMB.setTheUserForBean}"
+                                                                                   action="#{navigationController.goToMemberProfile}"
+                                                                                   id="friendName">
+                                                                        <f:param name="userId" value="#{friend.id}"/>
+                                                                        <f:param name="fromSource" value="MANAGE_FRIENDS"/>
+                                                                    </h:commandLink>
+                                                                </p:column>
+                                                                <p:column style="width: 20%">
+                                                                    <h:commandLink value="Delete" 
+                                                                                   style="color: #0000EE;"
+                                                                                   id="openConfirmDeleteFriend"
+                                                                                   class="commandLinks pull-right"  
+                                                                                   onclick="deleteFriendClicked()"
+                                                                                   actionListener="#{friendController.sessionMB.setTheUserForBean}">
+                                                                        <f:param name="fromSource" value="MANAGE_FRIENDS"/>
+                                                                        <f:param name="userId" value="#{friend.id}"/>
+                                                                        <f:ajax execute="@this" render="deleteFriendPanel"/>
+                                                                    </h:commandLink>
+                                                                </p:column>
+                                                            </p:panelGrid>
+                                                        </p:dataScroller>
+                                                    </div>
+                                                </p:outputPanel>
+                                            </div>
+                                            <p:outputPanel id="friendRequestsSent">
+                                                <div
+                                                    id="divSentRequests"
+                                                    class="newRequestsTabContent list-of-friends">
+                                                    <p:dataScroller value="#{friendController.userSessionObject.currentUserFriendRequestsSent}"
+                                                                    var="requestSentTo"
+                                                                    chunkSize="10">
+                                                        <p:panelGrid columns="3" 
+                                                                     columnClasses="firstColumnOne secondColumnTwo thirdColumnThree"
+                                                                     style="padding: 5px; width: 100%;"
+                                                                     id="friends">
+                                                            <p:column style="width: 20%">
+                                                                <p:graphicImage value="#{requestSentTo.profilePicture}"
+                                                                                id="friendProfile"
+                                                                                class="profilePicPost"/>
+                                                            </p:column>
+                                                            <p:column style="width: 60%">
+                                                                <h:commandLink value="#{requestSentTo.firstName} #{requestSentTo.lastName}" 
+                                                                               style="font-weight: bold; text-align: left"
+                                                                               actionListener="#{friendController.sessionMB.setTheUserForBean}"
+                                                                               action="#{navigationController.goToMemberProfile}"
+                                                                               id="friendName">
+                                                                    <f:param name="userId" value="#{requestSentTo.id}"/>
+                                                                    <f:param name="fromSource" value="MANAGE_FRIENDS"/>
+                                                                </h:commandLink>
+                                                            </p:column>
+                                                            <p:column style="width: 20%">
+                                                                <h:commandLink value="Delete" 
+                                                                               onclick="deleteSentRequestClicked()"
+                                                                               style="color: #0000EE;"
+                                                                               id="openConfirmDeleteFriendRequestSent"
+                                                                               class="commandLinks pull-right"                                                                       
+                                                                               actionListener="#{friendController.sessionMB.setTheUserForBean}">
+                                                                    <f:param name="userId" value="#{requestSentTo.id}"/>
+                                                                    <f:param name="fromSource" value="MANAGE_FRIENDS"/>
+                                                                    <f:ajax execute="@this" render="deleteRequestSentPanel"/>
+                                                                </h:commandLink>
+                                                            </p:column>
+                                                        </p:panelGrid>
+                                                    </p:dataScroller>
+                                                </div>
+                                            </p:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h:panelGroup id="popUpForm">
+                                    <div class="modal-content friendModalPosition"
+                                         id="acceptFriendModal"
+                                         style="width: 300px; display: none;">  
+                                        <h:panelGroup id="confirmFriendPanel">
+                                            <div id="confirmFriendRequestDiv">
+                                                Accept Request from #{friendController.sessionMB.anotherUser.firstName} #{friendController.sessionMB.anotherUser.lastName}?
+                                                <h:panelGrid columns="2">
+                                                    <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                                     onclick="closeAcceptFriendRequestModal()"
+                                                                     action="#{friendController.acceptFriendRequest()}">   
+                                                        <f:ajax execute="@this" render="pendingFriendRequests existingFriends"/>
+                                                    </h:commandButton>
+                                                    <h:commandButton id="closeAcceptFriendRequestModal"
+                                                                     onclick="closeAcceptFriendRequestModal()"
+                                                                     image="#{resource['images:rejectFriendRequest.png']}"> 
+                                                        <f:ajax execute="@this"/>
+                                                    </h:commandButton>
+                                                </h:panelGrid>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                    <div class="modal-content friendModalPosition"
+                                         id="deleteFriendModal"
+                                         style="width: 300px; display: none;">  
+                                        <h:panelGroup id="deleteRequestPanel">
+                                            <div id="deleteFriendRequestDiv">
+                                                Delete Request from #{friendController.sessionMB.anotherUser.firstName} #{friendController.sessionMB.anotherUser.lastName}?
+                                                <h:panelGrid columns="2">
+                                                    <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                                     onclick="closeDeleteFriendRequestModal()"
+                                                                     action="#{friendController.deleteFriendRequestReceived()}">       
+                                                        <f:ajax execute="@this" render="pendingFriendRequests"/>
+                                                    </h:commandButton>
+                                                    <h:commandButton id="closeDeleteFriendRequestModal"
+                                                                     onclick="closeDeleteFriendRequestModal()"
+                                                                     image="#{resource['images:rejectFriendRequest.png']}"> 
+                                                        <f:ajax execute="@this" render="pendingFriendRequests"/>
+                                                    </h:commandButton>
+                                                </h:panelGrid>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                    <div class="modal-content friendModalPosition"
+                                         id="deleteFriendRequestSentModal"
+                                         style="width: 300px; display: none;">  
+                                        <h:panelGroup id="deleteRequestSentPanel">
+                                            <div id="deleteFriendRequestSentDiv">
+                                                Cancel Request to #{friendController.sessionMB.anotherUser.firstName} #{friendController.sessionMB.anotherUser.lastName}?
+                                                <h:panelGrid columns="2">
+                                                    <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                                     onclick="closeDeleteFriendRequestSentModal()"
+                                                                     action="#{friendController.deleteFriendRequestSent()}">       
+                                                        <f:ajax execute="@this" render="friendRequestsSent"/>
+                                                    </h:commandButton>
+                                                    <h:commandButton id="closeDeleteFriendRequestSentModal"
+                                                                     onclick="closeDeleteFriendRequestSentModal()"
+                                                                     image="#{resource['images:rejectFriendRequest.png']}"> 
+                                                        <f:ajax execute="@this"/>
+                                                    </h:commandButton>
+                                                </h:panelGrid>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                    <div class="modal-content friendModalPosition"
+                                         id="deleteExistingFriendModal"
+                                         style="width: 300px; display: none;">  
+                                        <h:panelGroup id="deleteFriendPanel">
+                                            <div id="deleteFriendDiv">
+                                                Delete Friend #{friendController.sessionMB.anotherUser.firstName} #{friendController.sessionMB.anotherUser.lastName}?
+                                                <h:panelGrid columns="2">
+                                                    <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                                     onclick="closeDeleteExistingFriendModal()"
+                                                                     action="#{friendController.deleteFriend()}">       
+                                                        <f:ajax execute="@this" render="existingFriends"/>
+                                                    </h:commandButton>
+                                                    <h:commandButton id="closeDeleteFriendModal"
+                                                                     onclick="closeDeleteExistingFriendModal()"
+                                                                     image="#{resource['images:rejectFriendRequest.png']}"> 
+                                                        <f:ajax execute="@this"/>
+                                                    </h:commandButton>
+                                                </h:panelGrid>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                    <div class="alertModalPosition alertPopUp"
+                                         id="newAlertModal"
+                                         style="display: none;">  
+                                        <h:panelGroup id="newFriendInteractionPanel">
+                                            <div id="newAlertDiv">
+                                            </div>
+                                            <h:commandButton id="closeNewFriendInteractionModal"
+                                                             class="alertPopUpCloseButton"
+                                                             onclick="closeAlertModal()"
+                                                             image="#{resource['images:closeAlertModal.png']}"> 
+                                                <f:ajax execute="@this"/>
+                                            </h:commandButton>
+                                        </h:panelGroup>
+                                    </div>
+                                </h:panelGroup>
+                                <div style="display: none"
+                                     id="result">
+                                    <h:commandButton id="updateFriendCollections"
+                                                     action="#{friendController.userSessionObject.resetFriendCollections()}">
+                                        <f:ajax execute="@this" render="pendingFriendRequests existingFriends friendRequestsSent"/>
+                                    </h:commandButton>
+                                    <h:commandButton id="submitSse"
+                                                     action="#{serverSentEventController.handleClientSubmittedServerSentEvent}">
+                                        <f:ajax execute="@this userIdSse userNetworkIdSse messageCategory messageType entityId"/>
+                                    </h:commandButton>
+                                    <h:inputHidden id="userIdSse"
+                                                   value="#{friendController.userSessionObject.loggedInUser.id}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="userRole"
+                                                   value="#{friendController.userSessionObject.loggedInUser.role}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="userNetworkIdSse"
+                                                   value="#{friendController.userSessionObject.loggedInUser.networkId}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="messageCategory"/>
+                                    <h:inputHidden id="messageType"/>
+                                    <h:inputHidden id="entityId"/>
+                                    <h:outputLabel id="sseBroadcasterUrlForBrowser"
+                                                   value="#{sseClientConfig.broadcastUrlForBrowser}">
+                                    </h:outputLabel>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                </div><!-- /.container -->
+            </ui:define>
+        </ui:composition> 
+    </f:view>
+</html>

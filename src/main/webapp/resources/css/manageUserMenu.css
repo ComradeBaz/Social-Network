@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10-Apr-2019, 18:13:12
+    Author     : ComradeBaz
+*/
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 70%;
+}
+
+.dropdown-content {
+    width: 100%;
+}
+
+.dropdown-content a {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: 14px;
+    color: black;
+    padding: 2px;
+    width: 100%;
+}
+
+.dropdown-content a:hover {
+    text-decoration: none;
+}
+
+.dropdown-content p {
+    padding: 2px;
+    margin: 4px;
+}
+
+.dropdown-content p:hover {
+    background-color: #d9d9d9;
+    text-decoration: none;
+}
+
+.show {
+    display: block;
+}
+
+.menuContent {
+    display: none;
+}

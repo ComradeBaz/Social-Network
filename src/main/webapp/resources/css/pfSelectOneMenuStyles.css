@@ -1,0 +1,58 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12-Apr-2019, 14:03:29
+    Author     : ComradeBaz
+*/
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background-image: none;
+    border: none;
+    background-color: #ffffff;
+}
+
+.ui-state-hover {
+    background-color: transparent;
+}
+
+.selectReceiver {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ui-helper-hidden-accessible {
+    background-color: black;
+    border-style: solid;
+    border-color: greenyellow;
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-default {
+    
+}
+/* Colour the divs left/right of the label on the selectOneMenu the same
+// colour as the background so they are hidden
+*/ 
+#receiver.ui-state-default.ui-corner-all.selectReceiver {
+    background-color: #f2f2f2;
+}
+
+#receiver.ui-state-default.ui-corner-all.selectReceiver{
+    border-color: red;
+}
+/*
+// Textbox for entering search term in PF selectOneMenu
+*/
+#receiver_panel {
+}
+
+/*
+// div surrounding receiver_filter
+// position is relative to the inputTextBox with the selectOneMenu value
+*/
+.ui-selectonemenu-filter-container {
+    position: relative;
+    bottom: 10px;
+}

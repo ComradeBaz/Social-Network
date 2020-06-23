@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <ui:composition template="/WEB-INF/include/template_no_jQuery.xhtml">
+            <ui:define name="head">
+                <title>Domrade</title> 
+                <!-- Custom styles for this template -->
+                <h:outputStylesheet name="css/starter-template.css"/>     
+                <h:outputStylesheet name="css/profileStyles.css"/>
+                <h:outputStylesheet name="css/networkWallStyles.css"/>     
+                <h:outputStylesheet name="css/notifications.css"/>   
+                <h:outputStylesheet name="css/manageSse.css"/>   
+                <h:outputStylesheet name="css/messageStyles.css"/>   
+                <h:outputScript library="js" name="manageWall.js"/>
+                <h:outputStylesheet name="css/manageUserMenu.css"/>    
+                <h:outputScript library="js" name="manageUserMenu.js"/>
+                <h:outputScript library="js" name="serverSentEventHandler.js"/>
+            </ui:define>
+            <ui:define name="body">
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" 
+                                    data-toggle="collapse" 
+                                    data-target="#navbar" 
+                                    aria-expanded="false" 
+                                    aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <h:form>
+                            <div id="navbar" class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav">                                    
+                                    <li>
+                                        <h:commandLink action="#{logInController.logout()}"
+                                                       value="Logout"/>
+                                    </li>
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </h:form>
+                    </div>
+                </nav>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <h:form prependId="false">
+                                <h:messages id="messages"/>
+                                <div style="align-content: center">
+                                </div>  
+                                <p:outputPanel class="wallBaseStyles">
+                                    <div class="profileDiv">
+                                        <div class="profilePicDiv">
+                                            <div id="theProfilePicture"
+                                                 class="profilePicDiv">
+                                                <p:graphicImage value="#{networkWallController.sessionMB.loggedInUser.profilePicture}"
+                                                                class="profilePic"
+                                                                id="profiler"/>
+                                            </div>
+                                            <h3>
+                                                <span class="profileText displayName">
+                                                    #{networkWallController.sessionMB.loggedInUser.firstName} #{networkWallController.sessionMB.loggedInUser.lastName}
+                                                </span>
+                                            </h3>
+                                            <h4>
+                                                <span class="profileText displayName">
+                                                    #{networkWallController.sessionMB.currentNetwork.name}
+                                                </span>
+                                            </h4>
+                                            <div class="icons"
+                                                 style="margin-bottom: 6px; position: relative; left: 0; top: 0;"> 
+                                                <div class="dropdown">
+                                                    <h:commandButton image="#{resource['images:goToNetworkWall.png']}"
+                                                                     class="profileIcons imageToBeOverlayed"
+                                                                     onclick="hideNotificationIcon()"
+                                                                     id="menuButton">
+                                                        <f:ajax execute="@this"/>
+                                                    </h:commandButton>  
+                                                    <h:commandButton image="#{resource['images:newPost.png']}"
+                                                                     id="newPostButton"
+                                                                     onclick="openNewPostModal()"
+                                                                     class="profileIcons"> 
+                                                        <f:ajax execute="@this"/>
+                                                    </h:commandButton>
+                                                    <h:graphicImage id="newNotificationIcon"
+                                                                    value="#{resource['images:newNotification.png']}"
+                                                                    class="newNotification">
+                                                    </h:graphicImage>
+                                                </div>
+                                            </div>
+                                            <div id="menuList" 
+                                                 class="dropdown-content"
+                                                 style="display: none">
+                                                <h:panelGroup id="wallPanelRoleMember"
+                                                              rendered="#{p:ifGranted('ROLE_MEMBER')}">                                                
+                                                    <p:outputPanel id="postPanelRoleMember"
+                                                                   style="border-top: #ddd; border-top-style: ridge" >
+                                                        <p><h:commandLink value="Profile"
+                                                                          action="#{navigationController.goToProfileSettings}"/></p>
+                                                        <p><h:commandLink value="Messages"
+                                                                          class="messagesNotNotified"
+                                                                          id="mMessagesLink"
+                                                                          action="#{navigationController.goToMessages}"/></p>
+                                                        <p><h:commandLink value="Events"
+                                                                          class="eventsNotNotified"
+                                                                          id="mEventsLink"
+                                                                          action="#{navigationController.goToEvents}"/></p>
+                                                        <p><h:commandLink value="Friends"
+                                                                          class="friendsNotNotified"
+                                                                          id="mFriendsLink"
+                                                                          action="#{navigationController.goToManageFriends()}"/></p>
+                                                        <p><h:commandLink value="Leave Network"                                                                      
+                                                                          action="#{navigationController.goToConfirmLeaveNetwork()}"/></p>
+                                                    </p:outputPanel>                                                                                                  
+                                                </h:panelGroup>
+                                                <h:panelGroup id="wallPanelRoleAdminMember"
+                                                              rendered="#{p:ifGranted('ROLE_ADMIN_MEMBER')}">                                                
+                                                    <p:outputPanel id="postPanelRoleAdminMember"
+                                                                   style="border-top: #ddd; border-top-style: ridge" >
+                                                        <p><h:commandLink value="Profile"
+                                                                          action="#{navigationController.goToProfileSettings()}"/></p>
+                                                        <p><h:commandLink value="Messages"
+                                                                          class="messagesNotNotified"
+                                                                          id="amMessagesLink"
+                                                                          action="#{navigationController.goToMessages}"/></p>
+                                                        <p><h:commandLink value="Events"
+                                                                          class="eventsNotNotified"
+                                                                          id="amEventsLink"
+                                                                          action="#{navigationController.goToEvents}"/></p>
+                                                        <p><h:commandLink value="Friends"
+                                                                          class="friendsNotNotified"
+                                                                          id="amFriendsLink"
+                                                                          action="#{navigationController.goToManageFriends()}"/></p>
+                                                        <p><h:commandLink value="Manage Guests"
+                                                                          class="manageGuestsNotNotified"
+                                                                          action="#{navigationController.manageNetworkUsers()}"/></p>
+                                                    </p:outputPanel>                                                                                                  
+                                                </h:panelGroup>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:outputPanel>
+                                <p:outputPanel id="wallPanel"
+                                               class="wallBaseStyles dropdown-content"
+                                               >
+                                    <div id="wallPostsDiv"
+                                         class="timeline">
+                                        <p:dataScroller value="#{networkWallController.userSessionObject.cachedWallPostObjects}" 
+                                                        var="post" 
+                                                        class="profileDiv"
+                                                        id="postScroller"
+                                                        chunkSize="10">
+                                            <p:panelGrid columns="2" 
+                                                         class="wallPostTable"
+                                                         id="postPanelGrid"
+                                                         style="width:100%">
+                                                <p:graphicImage value="#{post.profilePicture}"
+                                                                id="fuckthis"
+                                                                class="profilePicPost"/>
+                                                <p:outputPanel id="postPanel">
+                                                    <p:panelGrid columns="2" 
+                                                                 style="padding: 5px"
+                                                                 id="theWall">
+                                                        <h:commandLink value="#{post.wallPost.authorFirstName} #{post.wallPost.authorLastName}" 
+                                                                       style="font-weight: bold"
+                                                                       actionListener="#{networkWallController.sessionMB.setTheUserForBean}"
+                                                                       action="#{navigationController.goToProfile}"
+                                                                       id="firstName">
+                                                            <f:param name="userId" value="#{post.wallPost.authorId}"/>
+                                                            <f:param name="fromSource" value="NETWORK"/>
+                                                        </h:commandLink>
+                                                    </p:panelGrid>
+                                                    <p class="nameAndTimeStamp"><h:outputText value="#{post.wallPost.timeStamp}"
+                                                                                              class="timestampText"/></p><!--
+                                                    --><p><h:outputText value="#{post.wallPost.postText}"
+                                                                        id="postText"
+                                                                        class="replyText"/></p><!--
+                                                    --><div class="replyLikeButtonDiv">
+                                                        <h:panelGrid columns="2"
+                                                                     id="postMenu">
+                                                            <h:commandButton image="#{resource['images:replyPostNormal.png']}"                                                                         
+                                                                             action="#{networkWallController.sessionMB.initReply}"
+                                                                             onclick="openReplyToPostModal()"
+                                                                             id="replyButton">
+                                                                <f:ajax execute="@this" render="replytoPostPanel"/>
+                                                                <f:param name="postId" value="#{post.wallPost.id}"/>
+                                                                <f:param name="userWhoPosted" value="#{post.wallPost.authorId}"/>
+                                                            </h:commandButton>                                                        
+                                                        </h:panelGrid>
+                                                    </div>
+                                                </p:outputPanel>
+                                            </p:panelGrid>
+                                            <p:outputPanel id="testPanel">
+                                                <p:dataScroller value="#{post.wallPostReplies}"
+                                                                var="reply"
+                                                                id="replyScroller"                                                        
+                                                                chunkSize="10">
+                                                    <p:panelGrid columns="3" 
+                                                                 id="postPanelGrid"
+                                                                 class="replyPostTable"
+                                                                 style="width:100%">
+                                                        <p:graphicImage value="#{reply.profilePicture}"
+                                                                        class="profilePicReply"/>
+                                                        <p:outputPanel id="postPanel">                                                    
+                                                            <h:commandLink value="#{reply.wallPostReply.authorFirstName} #{reply.wallPostReply.authorLastName}" 
+                                                                           style="font-weight: bold"
+                                                                           actionListener="#{networkWallController.sessionMB.setTheUserForBean}"
+                                                                           action="#{navigationController.goToMemberProfile}"
+                                                                           id="firstName">
+                                                                <f:param name="userId" value="#{reply.wallPostReply.userId}"/><!--
+                                                                --></h:commandLink><!--
+                                                            --><p class="nameAndTimeStamp"><h:outputText value="#{reply.wallPostReply.timeStamp}"
+                                                                                                         class="postReplyTimestampText"/></p><!--
+                                                            --><p><h:outputText value="#{reply.wallPostReply.postText}"
+                                                                                id="postText"
+                                                                                class="replyText"/></p><!--
+                                                            --></p:outputPanel>
+                                                    </p:panelGrid>
+                                                </p:dataScroller>
+                                            </p:outputPanel>
+                                        </p:dataScroller>
+                                    </div>
+                                </p:outputPanel>
+                                <h:panelGroup id="newPostPanelWrapper">
+                                    <div class="modal-content postModalPosition"
+                                         id="myPostModal"
+                                         style="width: 300px; display: none;">  
+                                        <h:panelGroup id="newPostPanel">
+                                            <div id="newPostModalContent">
+                                                New Post from #{networkWallController.sessionMB.loggedInUser.firstName}&nbsp;#{networkWallController.sessionMB.loggedInUser.lastName}
+                                                <div>
+                                                    <h:inputTextarea cols="40" 
+                                                                     rows="3"
+                                                                     id="userPost"
+                                                                     style="width: 100%; margin: 0px; padding: 0px;"
+                                                                     value="#{networkWallController.wallPost.postText}">
+                                                    </h:inputTextarea>
+                                                </div>
+                                                <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                                 id="savePostButton"
+                                                                 onclick="closeNewPostModal()"
+                                                                 action="#{networkWallController.savePost}">
+                                                    <f:ajax execute="@this" render="wallPanel"/>
+                                                </h:commandButton>   
+                                                <h:commandButton image="#{resource['images:rejectFriendRequest.png']}"
+                                                                 onclick="closeNewPostModal()"
+                                                                 id="closePostButton">
+                                                    <f:ajax execute="@this"/>
+                                                </h:commandButton>   
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                    <div class="modal-content postModalPosition"
+                                         id="replyToPostModal"
+                                         style="width: 300px; display: none;">  
+                                        <h:panelGroup id="replytoPostPanel">
+                                            <div id="replyToPostModalContent">
+                                                Reply to #{networkWallController.sessionMB.anotherUser.firstName}&nbsp;#{networkWallController.sessionMB.anotherUser.lastName}
+                                                <div>
+                                                    <h:inputTextarea cols="35" 
+                                                                     rows="2"
+                                                                     id="uReply"
+                                                                     style="width: 100%"
+                                                                     value="#{networkWallController.wallPostReply.postText}">
+                                                    </h:inputTextarea>
+                                                </div>
+                                                <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                                 id="savePostReplyButton"
+                                                                 onclick="closePostReplyModal()"
+                                                                 action="#{networkWallController.saveReply}">
+                                                    <f:param name="postId" value="#{networkWallController.sessionMB.currentPostId}"/>
+                                                    <f:ajax execute="@this" render="wallPanel"/>
+                                                </h:commandButton>   
+                                                <h:commandButton image="#{resource['images:rejectFriendRequest.png']}"
+                                                                 onclick="closePostReplyModal()"
+                                                                 id="closePostReplyButton">
+                                                    <f:ajax execute="@this"/>
+                                                </h:commandButton>  
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                </h:panelGroup>
+                                <div class="alertModalPosition alertPopUp"
+                                     id="newAlertModal"
+                                     style="display: none;">  
+                                    <h:panelGroup id="newFriendInteractionPanel">
+                                        <div id="newAlertDiv">                                            
+                                        </div>
+                                        <h:commandButton value="New Post"
+                                                         style="display: none; border-style: none"
+                                                         id="updateTimeline"
+                                                         onclick="closeAlertModal()"
+                                                         action="#{networkWallController.userSessionObject.resetNetworkWallCollections()}">
+                                            <f:ajax execute="@this" render="wallPanel"/>
+                                        </h:commandButton>
+                                        <h:commandButton id="closeNewFriendInteractionModal"
+                                                         class="alertPopUpCloseButton"
+                                                         onclick="closeAlertModal()"
+                                                         image="#{resource['images:closeAlertModal.png']}"> 
+                                            <f:ajax execute="@this"/>
+                                        </h:commandButton>
+                                    </h:panelGroup>
+                                </div>
+                                <div style="display: none"
+                                     id="result">
+                                    <h:inputHidden id="dataToSubmit"
+                                                   value="placeholder"/>
+                                    <h:commandButton id="submitSse"
+                                                     action="#{serverSentEventController.handleClientSubmittedServerSentEvent}">
+                                        <f:ajax execute="@this userIdSse userNetworkIdSse messageCategory messageType entityId"/>
+                                    </h:commandButton>
+                                    <h:inputHidden id="userIdSse"
+                                                   value="#{networkWallController.userSessionObject.loggedInUser.id}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="userRole"
+                                                   value="#{networkWallController.userSessionObject.loggedInUser.role}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="userNetworkIdSse"
+                                                   value="#{networkWallController.userSessionObject.loggedInUser.networkId}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="messageCategory"/>
+                                    <h:inputHidden id="messageType"/>
+                                    <h:inputHidden id="entityId"/>
+                                    <h:outputLabel id="sseBroadcasterUrlForBrowser"
+                                                   value="#{sseClientConfig.broadcastUrlForBrowser}">
+                                    </h:outputLabel>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                </div><!-- /.container -->
+            </ui:define>
+        </ui:composition> 
+    </f:view>
+</html>

@@ -1,0 +1,341 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">>
+    <f:view>
+        <ui:composition template="/WEB-INF/include/template.xhtml">
+            <ui:define name="head">
+                <title>Domrade</title>
+                <!-- Custom styles for this template -->
+                <h:outputStylesheet name="css/starter-template.css"/>
+                <h:outputStylesheet name="css/profileStyles.css"/>
+                <h:outputStylesheet name="css/networkWallStyles.css"/> 
+                <h:outputStylesheet name="css/manageUserMenu.css"/>    
+                <h:outputStylesheet name="css/messageStyles.css"/>
+                <h:outputStylesheet name="css/notifications.css"/>   
+                <h:outputStylesheet name="css/manageSse.css"/>   
+                <h:outputScript library="js" name="manageWall.js"/>                
+                <h:outputScript library="js" name="manageMessages.js"/>  
+                <h:outputScript library="js" name="manageUserMenu.js"/>  
+                <h:outputScript library="js" name="manageFriendRequest.js"/>
+                <h:outputScript library="js" name="serverSentEventHandler.js"/>
+            </ui:define>
+            <ui:define name="body">
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" 
+                                    data-toggle="collapse" 
+                                    data-target="#navbar" 
+                                    aria-expanded="false" 
+                                    aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            
+                        </div>
+                        <h:form>
+                            <div id="navbar" class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <h:commandLink action="#{logInController.logout()}"
+                                                       value="Logout"/>
+                                    </li>
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </h:form>
+                    </div>
+                </nav>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <h:form prependId="false">
+                                <h:messages id="setUpNetworkFormMessages"/>
+                                <div style="align-content: center">
+                                </div>
+                                <div class="profileDiv">
+                                    <div class="profilePicDiv">
+                                        <!-- src\main\resources\static\D\user@email.com7708098792524120369.jpeg -->
+                                        <h:graphicImage value="#{memberProfileController.sessionMB.anotherUser.profilePicture}"
+                                                        id="profiler"
+                                                        class="profilePic"/>
+                                        <h3>
+                                            <span class="profileText displayName">
+                                                #{memberProfileController.sessionMB.anotherUser.firstName} #{memberProfileController.sessionMB.anotherUser.lastName}
+                                            </span>
+                                        </h3>
+                                        <div class="icons">  
+                                            <p:outputPanel id="iconPanel">
+                                                <h:commandButton image="#{resource['images:goToNetworkWall.png']}"
+                                                                 class="profileIcons imageToBeOverlayed"
+                                                                 onclick="hideNotificationIconMemberProfile()"
+                                                                 id="menuButtonMemberProfile">
+                                                    <f:ajax execute="@this"/>
+                                                </h:commandButton>
+                                                <h:commandButton image="#{memberProfileController.sessionMB.friendRequestSent or memberProfileController.sessionMB.currentUserAnotherUserFriends ? resource['images:deleteFriendRequest.png'] : resource['images:newPost.png']}"
+                                                                 class="profileIcons"
+                                                                 onclick="popUpModal('#{memberProfileController.sessionMB.friendRequestSent}', '#{memberProfileController.sessionMB.currentUserAnotherUserFriends}')"
+                                                                 id="requestFriend"> 
+                                                    <f:ajax execute="@this"/>
+                                                </h:commandButton>                                               
+                                                <h:commandButton image="#{resource['images:newMessage.png']}"
+                                                                 class="profileIcons"
+                                                                 onclick="showNewMessageDiv()"
+                                                                 id="newMessageButtonMemberProfile">
+                                                    <f:ajax execute="@this"/>
+                                                </h:commandButton>
+                                                <h:graphicImage id="newNotificationIcon"
+                                                                value="#{resource['images:newNotification.png']}"
+                                                                class="newNotificationWhenThreeMenuButtons">
+                                                </h:graphicImage>
+                                            </p:outputPanel>
+
+                                        </div>
+                                    </div>
+                                    <div id="menuList" 
+                                         class="dropdown-content"
+                                         style="display: none">
+                                        <h:panelGroup id="wallPanelRoleUser"
+                                                      rendered="#{p:ifGranted('ROLE_USER')}">                                                
+                                            <p:outputPanel id="postPanelRoleUser"
+                                                           style="border-top: #ddd; border-top-style: ridge" >
+                                                <p><h:commandLink value="Join a Network"
+                                                                  action="#{navigationController.goToRequestJoinNetwork()}"/></p>
+                                                <p><h:commandLink value="Messages"
+                                                                  class="messagesNotNotified"
+                                                                  action="#{navigationController.goToMessages}"/></p>
+                                                <p><h:commandLink value="Friends"
+                                                                  class="friendsNotNotified"
+                                                                  action="#{navigationController.goToManageFriends}"/></p>
+                                                <p><h:commandLink value="Profile"
+                                                                  action="#{navigationController.goToProfileSettings}"/></p>
+                                            </p:outputPanel>                                                                                                  
+                                        </h:panelGroup>
+                                        <h:panelGroup id="wallPanelRoleAdmin"
+                                                      rendered="#{p:ifGranted('ROLE_ADMIN')}">                                                
+                                            <p:outputPanel id="postPanelRoleAdmin"
+                                                           style="border-top: #ddd; border-top-style: ridge" >
+                                                <p><h:commandLink value="Set Up Network"
+                                                                  action="#{navigationController.goToSetUpNetwork()}"/></p>
+                                                <p><h:commandLink value="Messages"
+                                                                  class="messagesNotNotified"
+                                                                  action="#{navigationController.goToMessages}"/></p>
+                                                <p><h:commandLink value="Friends"
+                                                                  class="friendsNotNotified"
+                                                                  action="#{navigationController.goToManageFriends}"/></p>
+                                                <p><h:commandLink value="Profile"
+                                                                  action="#{navigationController.goToProfileSettings}"/></p>
+                                            </p:outputPanel>                                                                                                  
+                                        </h:panelGroup>
+                                        <h:panelGroup id="wallPanelRoleMember"
+                                                      rendered="#{p:ifGranted('ROLE_MEMBER')}">                                                
+                                            <p:outputPanel id="postPanelRoleMember"
+                                                           style="border-top: #ddd; border-top-style: ridge" >
+                                                <p><h:commandLink value="Home"
+                                                                  class="wallNotNotified"
+                                                                  action="#{navigationController.goToNetwork}"/></p>
+                                                <p><h:commandLink value="Profile"
+                                                                  action="#{navigationController.goToProfileSettings}"/></p>
+                                                <p><h:commandLink value="Messages"
+                                                                  class="messagesNotNotified"
+                                                                  id="mMessagesLink"
+                                                                  action="#{navigationController.goToMessages}"/></p>
+                                                <p><h:commandLink value="Events"
+                                                                  class="eventsNotNotified"
+                                                                  id="mEventsLink"
+                                                                  action="#{navigationController.goToEvents}"/></p>
+                                                <p><h:commandLink value="Friends"
+                                                                  class="friendsNotNotified"
+                                                                  id="mFriendsLink"
+                                                                  action="#{navigationController.goToManageFriends()}"/></p>                                                
+                                            </p:outputPanel>                                                                                                  
+                                        </h:panelGroup>
+                                        <h:panelGroup id="wallPanelRoleAdminMember"
+                                                      rendered="#{p:ifGranted('ROLE_ADMIN_MEMBER')}">                                                
+                                            <p:outputPanel id="postPanelRoleAdminMember"
+                                                           style="border-top: #ddd; border-top-style: ridge" >
+                                                <p><h:commandLink value="Home"
+                                                                  class="wallNotNotified"
+                                                                  action="#{navigationController.goToNetwork}"/></p>
+                                                <p><h:commandLink value="Profile"
+                                                                  action="#{navigationController.goToProfileSettings}"/></p>
+                                                <p><h:commandLink value="Messages"
+                                                                  class="messagesNotNotified"
+                                                                  action="#{navigationController.goToMessages}"/></p>
+                                                <p><h:commandLink value="Events"
+                                                                  class="eventsNotNotified"
+                                                                  action="#{navigationController.goToEvents}"/></p>
+                                                <p><h:commandLink value="Friends"
+                                                                  class="friendsNotNotified"
+                                                                  id="amFriendsLink"
+                                                                  action="#{navigationController.goToManageFriends}"/></p>
+                                                <p><h:commandLink value="Manage Guests"
+                                                                  class="manageGuestsNotNotified"
+                                                                  action="#{navigationController.manageNetworkUsers()}"/></p>
+                                            </p:outputPanel>                                                                                                  
+                                        </h:panelGroup>
+                                        <h:panelGroup id="wallPanelRoleUserJoinRequestSent"
+                                                      rendered="#{p:ifGranted('ROLE_USER_JOIN_REQUEST_SENT')}">                                                
+                                            <p:outputPanel id="postPanelRoleUserJoinRequestSent"
+                                                           style="border-top: #ddd; border-top-style: ridge" >
+                                                <p><h:commandLink value="Home"
+                                                                  class="wallNotNotified"
+                                                                  action="#{navigationController.goToWaitingConfirmation()}"/></p>
+                                                <p><h:commandLink value="Profile"
+                                                                  action="#{navigationController.goToProfileSettings}"/></p>
+                                                <p><h:commandLink value="Messages"
+                                                                  class="messagesNotNotified"
+                                                                  action="#{navigationController.goToMessages}"/></p>
+                                                <p><h:commandLink value="Friends"
+                                                                  class="friendsNotNotified"
+                                                                  action="#{navigationController.goToManageFriends}"/></p>
+                                            </p:outputPanel>                                                                                                  
+                                        </h:panelGroup>
+                                    </div>
+                                    <div id="newMessageDiv"
+                                         class="dropdown-content"
+                                         style="display: none">                                                
+                                        <p:outputPanel id="newMessagePanel"
+                                                       style="border-top: #ddd; border-top-style: ridge">
+                                            <div class="login-form">     
+                                                <div class="control-group">
+                                                    <h:selectOneMenu id="recipient" 
+                                                                     value="#{messageController.receiverUserId}"                  
+                                                                     class="recipient"
+                                                                     style="width:160px; color: black">
+                                                        <f:selectItem itemLabel="#{memberProfileController.sessionMB.anotherUser.firstName}&nbsp;#{memberProfileController.sessionMB.anotherUser.lastName}"
+                                                                      itemValue="#{memberProfileController.sessionMB.anotherUser.id}"/>
+                                                        
+                                                    </h:selectOneMenu>
+                                                </div>     
+                                                <div>
+                                                    <h:panelGrid columns="2"
+                                                                 style="width: 100%" 
+                                                                 columnClasses="ninety-percent top-alignment, ten-percent bottom-alignment">
+                                                        <p:inputTextarea id="messageText"
+                                                                         rows="2"
+                                                                         autoResize="true"
+                                                                         class="displyMessageTextArea"
+                                                                         value="#{messageController.messageText}"
+                                                                         style="width: 100%; overflow: auto">
+                                                        </p:inputTextarea>
+                                                        <h:commandButton image="#{resource['images:replyMessage.png']}"
+                                                                         id="sendMessageFromProfileButton"
+                                                                         actionListener="#{messageController.sendMessage}">
+                                                            <f:ajax execute="@this recipient messageText"/>
+                                                        </h:commandButton>
+                                                    </h:panelGrid>
+
+                                                </div>
+                                            </div>
+                                        </p:outputPanel>   
+                                    </div>
+                                </div>
+                                <div id="requestFriendModal" class="modal">
+                                    <!-- Modal reply to post content -->
+                                    <div class="modal-content"
+                                         style="width: 300px;">  
+                                        <p>Send Friend Request to&nbsp;#{memberProfileController.sessionMB.anotherUser.firstName}&nbsp;#{memberProfileController.sessionMB.anotherUser.lastName}?</p>
+
+                                        <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                         id="acceptFriendButton"
+                                                         onclick ="closeRequestFriendModal()"
+                                                         action="#{friendController.startFriendInteraction()}">
+                                            <f:ajax execute="@this" render="iconPanel"/>
+                                        </h:commandButton>   
+                                        <h:commandButton image="#{resource['images:rejectFriendRequest.png']}"
+                                                         onclick ="closeRequestFriendModal()"
+                                                         id="closeFriendRequestModal">
+                                            <f:ajax execute="@this"/>
+                                        </h:commandButton>  
+                                    </div>
+                                </div>   
+                                <div id="cancelRequestModal" class="modal">
+                                    <!-- Modal reply to post content -->
+                                    <div class="modal-content"
+                                         style="width: 300px;">  
+                                        <p>You and&nbsp;#{memberProfileController.sessionMB.anotherUser.firstName}&nbsp;#{memberProfileController.sessionMB.anotherUser.lastName} will not be friends.</p>
+
+                                        <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                         id="cancelFriendRequestButton"
+                                                         onclick="closeCancelRequestModal()"
+                                                         action="#{friendController.startFriendInteraction()}">
+                                            <f:ajax execute="@this" render="iconPanel"/>
+                                        </h:commandButton>   
+                                        <h:commandButton image="#{resource['images:rejectFriendRequest.png']}"
+                                                         onclick="closeCancelRequestModal()"
+                                                         id="closeCancelRequestModal">
+                                            <f:ajax execute="@this"/>
+                                        </h:commandButton>  
+                                    </div>
+                                </div>   
+                                <div id="deleteFriendModal" class="modal">
+                                    <!-- Modal reply to post content -->
+                                    <div class="modal-content"
+                                         style="width: 300px;">  
+                                        <p>Delete Friend&nbsp;#{memberProfileController.sessionMB.anotherUser.firstName}&nbsp;#{memberProfileController.sessionMB.anotherUser.lastName}?</p>
+
+                                        <h:commandButton image="#{resource['images:acceptFriendRequest.png']}"
+                                                         id="deleteFriendButton"
+                                                         onclick="closeDeleteFriendModal()"
+                                                         action="#{friendController.startFriendInteraction()}">
+                                            <f:ajax execute="@this" render="iconPanel"/>
+                                        </h:commandButton>   
+                                        <h:commandButton image="#{resource['images:rejectFriendRequest.png']}"
+                                                         onclick="closeDeleteFriendModal()"
+                                                         id="closeDeleteFriendModal">
+                                            <f:ajax execute="@this"/>
+                                        </h:commandButton>  
+                                    </div>
+                                </div>   
+                                <div class="alertModalPosition alertPopUp"
+                                     id="newAlertModal"
+                                     style="display: none;">  
+                                    <h:panelGroup id="newFriendInteractionPanel">
+                                        <div id="newAlertDiv">
+                                        </div>
+                                        <h:commandButton id="closeNewFriendInteractionModal"
+                                                         class="alertPopUpCloseButton"
+                                                         onclick="closeAlertModal()"
+                                                         image="#{resource['images:closeAlertModal.png']}"> 
+                                            <f:ajax execute="@this"/>
+                                        </h:commandButton>
+                                    </h:panelGroup>
+                                </div>
+                                <div style="display: none"
+                                     id="result">
+                                    <h:commandButton id="submitSse"
+                                                     action="#{serverSentEventController.handleClientSubmittedServerSentEvent}">
+                                        <f:ajax execute="@this userIdSse userNetworkIdSse messageCategory messageType entityId"/>
+                                    </h:commandButton>
+                                    <h:inputHidden id="userIdSse"
+                                                   value="#{memberProfileController.userSessionObject.loggedInUser.id}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="userRole"
+                                                   value="#{memberProfileController.userSessionObject.loggedInUser.role}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="userNetworkIdSse"
+                                                   value="#{memberProfileController.userSessionObject.loggedInUser.networkId}">
+                                    </h:inputHidden>
+                                    <h:inputHidden id="messageCategory"/>
+                                    <h:inputHidden id="messageType"/>
+                                    <h:inputHidden id="entityId"/>
+                                    <h:outputLabel id="sseBroadcasterUrlForBrowser"
+                                                   value="#{sseClientConfig.broadcastUrlForBrowser}">
+                                    </h:outputLabel>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                </div><!-- /.container -->
+            </ui:define>
+        </ui:composition> 
+    </f:view>
+</html>
